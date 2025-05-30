@@ -24,3 +24,7 @@ jobs:
         DB_PASS: ${{ secrets.DB_PASS }}
         DB_NAME: ${{ secrets.DB_NAME }}
       run: python update_scores.py
+      env:
+  PANDASCORE_TOKEN: ${{ secrets.PANDASCORE_TOKEN }}
+  SUPABASE_URL: https://ajtzkuhsnymajitgdlaw.supabase.co
+  SUPABASE_API_KEY: ${{ secrets.SUPABASE_API_KEY }};
