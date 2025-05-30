@@ -1,30 +1,30 @@
-name: Update Competition Scores
+name: Update match results from PandaScore to Supabase
 
 on:
   schedule:
-    - cron: '*/15 * * * *' # Toutes les 15 minutes
-  workflow_dispatch:
+    - cron: '*/15 * * * *'  # toutes les 15 minutes
+  workflow_dispatch:       # permet de lancer manuellement
 
 jobs:
-  update-scores:
+  update_scores:
     runs-on: ubuntu-latest
+
+    env:
+      PANDASCORE_TOKEN: ${{ secrets.PANDASCORE_TOKEN }}
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_API_KEY: ${{ secrets.SUPABASE_API_KEY }}
+
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.10'
-    - name: Install dependencies
-      run: pip install -r requirements.txt
-    - name: Run update script
-      env:
-        PANDASCORE_TOKEN: ${{ secrets.PANDASCORE_TOKEN }}
-        DB_HOST: ${{ secrets.DB_HOST }}
-        DB_USER: ${{ secrets.DB_USER }}
-        DB_PASS: ${{ secrets.DB_PASS }}
-        DB_NAME: ${{ secrets.DB_NAME }}
-      run: python update_scores.py
-      env:
-  PANDASCORE_TOKEN: ${{ secrets.PANDASCORE_TOKEN }}
-  SUPABASE_URL: https://ajtzkuhsnymajitgdlaw.supabase.co
-  SUPABASE_API_KEY: ${{ secrets.SUPABASE_API_KEY }};
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run update script
+        run: python update_scores.py
